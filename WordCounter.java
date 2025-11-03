@@ -33,12 +33,13 @@ public class WordCounter {
             String word = matcher.group();
             fullCount++;
 
-            if (stopword != null) {
-                if (word.equals(stopword)) {
-                    stopwordFound = true;
-                    break;
-                }
-                wordCount++;
+            if (stopword != null && !stopwordFound) {
+                //if (stopwordFound == false) {
+                    wordCount++;
+                    if (word.equals(stopword)) {
+                        stopwordFound = true;
+                    }
+                //} 
             }
         } 
 
@@ -54,11 +55,17 @@ public class WordCounter {
             }
         }
 
+        // if <5, throw TooSmallText (even if stopword was found)
+        if (wordCount < 5) {
+            throw new TooSmallText("Only found " + fullCount + " words.");
+        }
+
         // if stopword is not found
         if (stopwordFound == false) {
             throw new InvalidStopwordException("Couldn't find stopword: " + stopword);
         }
 
+        // returns word count unless less than 5
         return wordCount;
     }
 
@@ -142,7 +149,6 @@ public class WordCounter {
             case 1:
                 String filePath = args[0];
                 try {
-                    try {
                         StringBuffer fileBuffer = processFile(filePath);
                         String stopword = null;
                         int wordCount = 0;
@@ -153,9 +159,9 @@ public class WordCounter {
 
                         wordCount = processText(fileBuffer, stopword);
                         System.out.println("Found " + wordCount + " words.");
-                    } catch (EmptyFileException e) {
-                        throw new TooSmallText("Only found 0 words");
-                    }
+                    // } catch (EmptyFileException e) {
+                    //     throw new TooSmallText("Only found 0 words.");
+                    // }
                 } catch (Exception e) {
                     System.out.println(e);
                 }
