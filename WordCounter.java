@@ -21,7 +21,7 @@ public class WordCounter {
                             will be returned if stopword is null*/
 
         if (text == null) {
-            throw new TooSmallText("Text is null.");
+            throw new TooSmallText("Only found 0 words.");
         }
 
         int count = 0;
@@ -31,6 +31,7 @@ public class WordCounter {
             //System.out.println("I just found the word: " + regexMatcher.group());
             
             String word = matcher.group();
+            fullCount++;
 
             if (stopword != null) {
                 if (word.equals(stopword)) {
@@ -38,8 +39,6 @@ public class WordCounter {
                     break;
                 }
                 wordCount++;
-            } else {
-                fullCount++;
             }
         } 
 
@@ -51,7 +50,7 @@ public class WordCounter {
             
             // unless word count <5 - throw TooSmallText exception
             } else {
-                throw new TooSmallText("Only found " + fullCount + " words");
+                throw new TooSmallText("Only found " + fullCount + " words.");
             }
         }
 
