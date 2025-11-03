@@ -1,6 +1,10 @@
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*; // Import the Scanner class to read text files
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern; // Import the Scanner class to read text files
+import java.util.regex.Pattern;
 
 public class WordCounter {
 
@@ -21,11 +25,11 @@ public class WordCounter {
 
         int count = 0;
         Pattern regex = Pattern.compile("[a-zA-Z0-9']+");
-        Matcher regexMatcher = regex.matcher(text);
-        while (regexMatcher.find()) {
+        Matcher matcher = regex.matcher(text);
+        while (matcher.find()) {
             //System.out.println("I just found the word: " + regexMatcher.group());
             
-            String word = regexMatcher.group();
+            String word = matcher.group();
 
             if (word.equals(stopword)) {
                 stopwordFound = true;
@@ -63,7 +67,34 @@ public class WordCounter {
     // if file cant open --> prompt user to re-enter filenanme until it can open
     // if empty file --> raise EmptyFileException w/ file path in msg
     public StringBuffer processFile(String path) throws EmptyFileException {
-        return null; //placeholder
+        Scanner scan = new Scanner(System.in);
+        File userFile = new File(path);
+
+        // if file cant open --> prompt user to re-enter filename
+        while (userFile.exists() == false) {
+            System.out.println("File can't be opened, re-enter filename: ");
+            path = scan.nextLine();
+            userFile = new File(path);
+        }
+
+        Path filePath = Paths.get(path);
+        StringBuffer text = new StringBuffer();
+
+        try {
+            List<String> textLines = Files.readAllLines(filePath);
+            if (textLines.isEmpty()) {
+                scan.close();
+                throw new EmptyFileException("File " + userFile + " is empty.");
+            }
+            for (String line : textLines) {
+                text.append(line + "\n");
+            }
+        } catch (IOException e) {
+            return new StringBuffer();
+        }
+
+        scan.close();
+        return text;
     }
 
     // main method
@@ -74,25 +105,29 @@ public class WordCounter {
     // displays msgs of exceptions raised
     // user gets 1 chance to re-specify a stopword if not found in text
     public static void main(String[] args) throws TooSmallText {
-        Scanner reader = new Scanner(System.in);
-        int option = reader.nextInt(); //user will choose option 1 or 2
+        Scanner scan = new Scanner(System.in);
+        int option = scan.nextInt(); //user will choose option 1 or 2
+        
+        // reprompt user if not 1 or 2
         if (option != 1 && option != 2) {
             System.out.println("Invalid input. Enter 1 or 2: ");
-            option = reader.nextInt();
-            reader.close();
+            option = scan.nextInt();
+            scan.close();
 
+            // ends if not 1 or 2 again
+            // (they only get 1 chance)
             if (option != 1 || option != 2) {
                 System.out.println("Invalid input, exiting.");
                 return;
             }
         }
-        reader.close();
+        scan.close();
 
         switch(option) {
             case 1:
-                String file = args[0];
+                String filePath = args[0];
                 try {
-
+                    
                 } catch (Exception e) {
 
                 }
