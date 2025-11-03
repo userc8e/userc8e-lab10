@@ -1,5 +1,6 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class WordCounter {
 
     //  METHODS
@@ -7,13 +8,13 @@ public class WordCounter {
     // counts number of words in text through stopword
     // if stopword null --> count all words in file
     // return int count; unless count < 5 --> TooSmallText exception
-    public int processText(StringBuffer text, String stopword) {
+    public int processText(StringBuffer text, String stopword) throws InvalidStopWordException, TooSmallText {
         if (text == null) {
             return 0;
         }
 
         int count = 0;
-        Pattern regex = Pattern.compile("your regular expression here");
+        Pattern regex = Pattern.compile("\\w");
         Matcher regexMatcher = regex.matcher(text);
         while (regexMatcher.find()) {
             System.out.println("I just found the word: " + regexMatcher.group());
@@ -27,7 +28,7 @@ public class WordCounter {
     // returns StringBuffer
     // if file cant open --> prompt user to re-enter filenanme until it can open
     // if empty file --> raise EmptyFileException w/ file path in msg
-    public StringBuffer processFile(String path) {
+    public StringBuffer processFile(String path) throws EmptyFileException {
         return null; //placeholder
     }
 
@@ -38,7 +39,7 @@ public class WordCounter {
     // calls methods above
     // displays msgs of exceptions raised
     // user gets 1 chance to re-specify a stopword if not found in text
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TooSmallText {
 
     }
 }
