@@ -32,14 +32,14 @@ public class WordCounter {
             
             String word = matcher.group();
 
-            if (stopword != null && word.equals(stopword)) {
-                stopwordFound = true;
-            }
-
-            if (stopword == null) {
-                fullCount++;
-            } else {
+            if (stopword != null) {
+                if (word.equals(stopword)) {
+                    stopwordFound = true;
+                    break;
+                }
                 wordCount++;
+            } else {
+                fullCount++;
             }
         } 
 
@@ -51,13 +51,13 @@ public class WordCounter {
             
             // unless word count <5 - throw TooSmallText exception
             } else {
-                throw new TooSmallText("Text has " + fullCount + " words; need at least 5 words.");
+                throw new TooSmallText("Only found " + fullCount + " words");
             }
         }
 
         // if stopword is not found
         if (stopwordFound == false) {
-            throw new InvalidStopwordException("Stopword was not found in text.");
+            throw new InvalidStopwordException("Couldn't find stopword: " + stopword);
         }
 
         return wordCount;
