@@ -84,12 +84,24 @@ public class WordCounter {
 
         try {
             List<String> textLines = Files.readAllLines(filePath);
-            if (textLines.isEmpty()) {
+            boolean isEmpty = true;
+
+            for (String line : textLines) {
+                if (!line.trim().isEmpty()) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (isEmpty) {
                 scan.close();
                 throw new EmptyFileException(userFile.getName() + " was empty");
             }
-            for (String line : textLines) {
-                text.append(line + "\n");
+            for (int i = 0; i < textLines.size(); i++) {
+                text.append(textLines.get(i));
+                if (i < textLines.size() - 1) {
+                    text.append("\n");
+                }
             }
         } catch (IOException e) {
             return new StringBuffer();
