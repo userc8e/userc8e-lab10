@@ -1,5 +1,6 @@
+import java.util.Scanner;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern; // Import the Scanner class to read text files
 
 public class WordCounter {
 
@@ -53,7 +54,7 @@ public class WordCounter {
         if (stopwordFound == false) {
             throw new InvalidStopWordException("Stopword was not found in text.");
         }
-        
+
         return wordCount;
     }
 
@@ -73,6 +74,37 @@ public class WordCounter {
     // displays msgs of exceptions raised
     // user gets 1 chance to re-specify a stopword if not found in text
     public static void main(String[] args) throws TooSmallText {
+        Scanner reader = new Scanner(System.in);
+        int option = reader.nextInt(); //user will choose option 1 or 2
+        if (option != 1 && option != 2) {
+            System.out.println("Invalid input. Enter 1 or 2: ");
+            option = reader.nextInt();
+            reader.close();
 
+            if (option != 1 || option != 2) {
+                System.out.println("Invalid input, exiting.");
+                return;
+            }
+        }
+        reader.close();
+
+        switch(option) {
+            case 1:
+                String file = args[0];
+                try {
+
+                } catch (Exception e) {
+
+                }
+                break;
+            case 2:
+                String text = args[0];
+                try {
+
+                } catch (Exception e) {
+
+                }
+                break;
+        }
     }
 }
