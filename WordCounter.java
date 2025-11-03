@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WordCounter {
+    StringBuffer buffer;
 
     //  METHODS
 
@@ -85,7 +86,7 @@ public class WordCounter {
             List<String> textLines = Files.readAllLines(filePath);
             if (textLines.isEmpty()) {
                 scan.close();
-                throw new EmptyFileException("File " + userFile + " is empty.");
+                throw new EmptyFileException(userFile.getName() + " was empty");
             }
             for (String line : textLines) {
                 text.append(line + "\n");

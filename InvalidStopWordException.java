@@ -1,6 +1,6 @@
 import java.io.IOException;
-public class InvalidStopWordException extends IOException {
-    public InvalidStopWordException(String e) {
+public class InvalidStopwordException extends IOException {
+    public InvalidStopwordException(String e) {
         super(e);
     }
 }

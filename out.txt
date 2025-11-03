@@ -1,0 +1,8 @@
+Enter option 1 or 2: 
+Found 8 words.
+Enter option 1 or 2: 
+Found 9 words.
+Enter option 1 or 2: 
+TooSmallText: Text has 0 words; need at least 5 words.
+Enter option 1 or 2: 
+TooSmallText: Text has 2 words; need at least 5 words.
